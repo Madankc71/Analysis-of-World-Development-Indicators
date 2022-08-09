@@ -1,0 +1,51 @@
+---
+title: "R code for 671"
+author: "Kushal"
+date: "4/22/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("ggplot2")
+lr <- read.csv("LR.csv")
+#View(lr)
+#line chart for Government Expenses
+ggplot(lr,aes(color=Developed,group=Country.Name,x=Year,y=Government.Expenses))+
+geom_line(linetype="solid",size = 0.8) +
+scale_color_manual(values=c('Red','Green'))
+
+#line chart for Literacy rate
+ggplot(lr,aes(color=Developed,group=Country.Name,x=Year,y=Literacy.rate))+
+geom_line(linetype="solid",size = 0.8) +
+scale_color_manual(values=c('Red','Green'))
+```
+```{r}
+ec <- read.csv("Economy.csv")
+ec<-ec[,-1]
+library(ggpubr)
+library(factoextra)
+set.seed(500)
+
+km3 <- kmeans(ec, 3, nstart = 100)
+fviz_cluster(km3, ec)+
+  scale_colour_manual(values = c("red", "green", "orange"))
+
+```
+
+```{r}
+rwa<-read.csv("Renewable.csv")
+head(rwa)
+rwa$Year<-as.character(rwa$Year)
+ggplot(rwa,aes(fill=Country.Name,x=Year,y=Renewable.Sources))+
+geom_bar(stat = "identity",width=0.8,position = "dodge")+
+scale_fill_manual(values=c('Blue','Green'))+
+   coord_flip()
+
+```
+
+
+
